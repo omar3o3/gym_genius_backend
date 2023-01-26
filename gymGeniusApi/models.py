@@ -12,8 +12,9 @@ class WorkoutPlan(models.Model):
     name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
 
+# blank=True, null=True, 
 class Exercise(models.Model):
-    workout_plan = models.ForeignKey(WorkoutPlan, related_name='workout_plan', on_delete=models.CASCADE)
+    workout_plan = models.ForeignKey(WorkoutPlan, related_name='workout_plan', blank=True, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     main_exercise = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
