@@ -24,6 +24,40 @@ class SetType(DjangoObjectType):
         model = Set
         fields = "__all__"
         
+        
+        
+        
+# class ExerciseInput(graphene.InputObjectType):
+#     id = graphene.ID()
+#     workout_plan = graphene.String()
+#     name = graphene.String()
+#     main_exercise = graphene.Boolean()
+    
+    
+# class CreateExercise(graphene.Mutation):
+#     class Arguments:
+#         exercise_data = ExerciseInput(required=True)
+
+#     exercise = graphene.Field(ExerciseType)
+
+#     @staticmethod
+#     def mutate(root, info, exercise_data=None):
+#         exercise_instance = Exercise( 
+#             workout_plan=exercise_data.workout_plan,
+#             name=exercise_data.name,
+#             main_exercise=exercise_data.main_exercise
+#         )
+#         exercise_instance.save()
+#         return CreateExercise(exercise=exercise_instance)
+    
+    
+# class Mutate(graphene.ObjectType):
+#     create_Exercise = graphene.Field(CreateExercise)
+
+
+
+
+        
 class Query(graphene.ObjectType):
     all_Routines = graphene.List(RoutineType)
     all_Exercises = graphene.List(ExerciseType)
