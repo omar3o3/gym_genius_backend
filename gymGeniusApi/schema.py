@@ -23,36 +23,35 @@ class SetType(DjangoObjectType):
     class Meta:
         model = Set
         fields = "__all__"
-        
-        
-        
-        
-# class ExerciseInput(graphene.InputObjectType):
-#     id = graphene.ID()
-#     workout_plan = graphene.String()
-#     name = graphene.String()
-#     main_exercise = graphene.Boolean()
-    
-    
-# class CreateExercise(graphene.Mutation):
-#     class Arguments:
-#         exercise_data = ExerciseInput(required=True)
 
-#     exercise = graphene.Field(ExerciseType)
 
-#     @staticmethod
-#     def mutate(root, info, exercise_data=None):
-#         exercise_instance = Exercise( 
-#             workout_plan=exercise_data.workout_plan,
-#             name=exercise_data.name,
-#             main_exercise=exercise_data.main_exercise
-#         )
-#         exercise_instance.save()
-#         return CreateExercise(exercise=exercise_instance)
+#FROM YOUTUBE ATTEMPT
+#FROM YOUTUBE ATTEMPT
+#FROM YOUTUBE ATTEMPT
+class ExerciseMutation(graphene.Mutation):
+    class Arguments:
+        name = graphene.String()
+        main_exercise = graphene.Boolean()
+        # workout_plan = graphene.Field(WorkoutPlanType)
     
+    exercise = graphene.Field(ExerciseType)
     
-# class Mutate(graphene.ObjectType):
-#     create_Exercise = graphene.Field(CreateExercise)
+    @classmethod
+    # def mutate(cls, root, info, name, main_exercise, workout_plan):
+    def mutate(cls, root, info, name, main_exercise):
+        # exercise = Exercise(name=name, main_exercise=main_exercise, workout_plan=workout_plan)
+        exercise = Exercise(name=name, main_exercise=main_exercise)
+        exercise.save()
+        return ExerciseMutation(exercise=exercise)
+
+class Mutation(graphene.ObjectType):
+    pass
+    # create_Exercise = graphene.Field(CreateExercise)
+    update_Exercise = ExerciseMutation.Field()
+
+#FROM YOUTUBE ATTEMPT
+#FROM YOUTUBE ATTEMPT
+#FROM YOUTUBE ATTEMPT
 
 
 
@@ -78,4 +77,4 @@ class Query(graphene.ObjectType):
     def resolve_all_Sets(rout, info):
         return Set.objects.all()
     
-schema = graphene.Schema(query=Query)
+schema = graphene.Schema(query=Query, mutation=Mutation)
