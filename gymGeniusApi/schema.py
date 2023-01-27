@@ -29,33 +29,27 @@ class SetType(DjangoObjectType):
 #FROM YOUTUBE ATTEMPT
 #FROM YOUTUBE ATTEMPT
 class ExerciseMutation(graphene.Mutation):
+    # print('-'*10)
     class Arguments:
         name = graphene.String()
         main_exercise = graphene.Boolean()
         # workout_plan = graphene.Field(WorkoutPlanType)
+        workout_plan = graphene.Int()
     
     exercise = graphene.Field(ExerciseType)
     
     @classmethod
     # def mutate(cls, root, info, name, main_exercise, workout_plan):
     def mutate(cls, root, info, name, main_exercise):
-        # exercise = Exercise(name=name, main_exercise=main_exercise, workout_plan=workout_plan)
+        # workout_plan_obj = WorkoutPlan.objects.find(pk=workout_plan)
+        # exercise = Exercise(name=name, main_exercise=main_exercise, workout_plan=workout_plan_obj)
         exercise = Exercise(name=name, main_exercise=main_exercise)
         exercise.save()
         return ExerciseMutation(exercise=exercise)
 
 class Mutation(graphene.ObjectType):
-    pass
     # create_Exercise = graphene.Field(CreateExercise)
     update_Exercise = ExerciseMutation.Field()
-
-#FROM YOUTUBE ATTEMPT
-#FROM YOUTUBE ATTEMPT
-#FROM YOUTUBE ATTEMPT
-
-
-
-
         
 class Query(graphene.ObjectType):
     all_Routines = graphene.List(RoutineType)
